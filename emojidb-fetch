@@ -4,4 +4,4 @@
 [ "$#" -eq 1 ] || { echo "Usage: $0 QUERY"; exit 1; }
 QUERY=$1
 
-curl -s https://emojidb.org/$QUERY-emojis | grep '<div class="emoji"' | sed 's/<div class="emoji" >//g;s/<\/div>//g;s/^ *//' | fzy | tr -d '\n' | xclip -selection clipboard
+curl -s https://emojidb.org/$QUERY-emojis | grep '<div class="emoji"' | sed 's/<div class="emoji" >//g; s/<\/div>//g; s/&gt;/>/g; s/&lt;/</g; s/^ *//' | fzy | tr -d '\n' | xclip -selection clipboard
