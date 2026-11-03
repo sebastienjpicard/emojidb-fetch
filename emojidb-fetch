@@ -1,7 +1,11 @@
 #!/bin/sh
 # See LICENCE for copyright and licence details
 
-[ "$#" -eq 1 ] || { echo "Usage: $0 QUERY"; exit 1; }
-QUERY=$1
+[ "$#" -gt 2 ] && { echo "Usage: $0 [-d] QUERY"; exit 1; }
 
-curl -s https://emojidb.org/$QUERY-emojis | grep '<div class="emoji"' | sed 's/<div class="emoji" >//g; s/<\/div>//g; s/&gt;/>/g; s/&lt;/</g; s/^ *//' | fzy | tr -d '\n' | xclip -selection clipboard
+QUERY=$1
+MENU=fzy
+
+[ "$1" = -d ] && MENU="dmenu -l 20" QUERY=${2:-$(echo | dmenu)}
+
+curl -s https://emojidb.org/$QUERY-emojis | grep '<div class="emoji"' | sed 's/<div class="emoji" >//g; s/<\/div>//g; s/&gt;/>/g; s/&lt;/</g; s/^ *//' | $MENU | tr -d '\n' | xclip -selection clipboard
