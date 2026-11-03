@@ -1,0 +1,7 @@
+emojidb-fetch: fzy emojis from emojidb.org
+==========================================
+
+Fetches emojis from emojidb.org and interactively copies them to your clipboard.
+
+Usage: ./emojidb-fetch QUERY
+Requirements: bash, curl, fzy, xclip
