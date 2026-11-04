@@ -8,4 +8,9 @@ MENU=fzy
 
 [ "$1" = -d ] && MENU="dmenu -l 20" QUERY=${2:-$(echo | dmenu)}
 
-curl -s https://emojidb.org/$QUERY-emojis | grep '<div class="emoji"' | sed 's/<div class="emoji" >//g; s/<\/div>//g; s/&gt;/>/g; s/&lt;/</g; s/^ *//' | $MENU | tr -d '\n' | xclip -selection clipboard
+QUERY=$(echo "$QUERY" | tr ' ' -)
+
+curl -s https://emojidb.org/"$QUERY"-emojis | grep '<div class="emoji"' |
+	sed -e 's/<div class="emoji" >//g; s/<\/div>//g; s/^ *//' \
+	    -e 's/&gt;/>/g; s/&lt;/</g' |
+	$MENU | tr -d '\n' | xclip -selection clipboard
