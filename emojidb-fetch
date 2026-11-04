@@ -12,5 +12,6 @@ QUERY=$(echo "$QUERY" | tr ' ' -)
 
 curl -s https://emojidb.org/"$QUERY"-emojis | grep '<div class="emoji"' |
 	sed -e 's/<div class="emoji" >//g; s/<\/div>//g; s/^ *//' \
-	    -e 's/&gt;/>/g; s/&lt;/</g' |
+	    -e 's/&gt;/>/g; s/&lt;/</g' \
+	    -e "s/&#39;/'/g" |
 	$MENU | tr -d '\n' | xclip -selection clipboard
